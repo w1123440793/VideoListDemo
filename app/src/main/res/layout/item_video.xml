@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:background="@android:color/holo_blue_light">
+
+    <TextView
+        android:id="@+id/title"
+        android:text="视频标题"
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:paddingLeft="10dp"
+        android:gravity="center|left"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+    <FrameLayout
+        android:id="@+id/layout_video"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/showview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/image_bg"
+            android:background="#FF4081"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/image_play"
+            android:layout_centerInParent="true"
+            android:src="@android:drawable/ic_media_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_below="@+id/layout"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
+            android:id="@+id/from"
+            android:textColor="@android:color/black"
+            android:text="中国网    21小时前"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:text="视频"
+            android:textColor="@android:color/black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

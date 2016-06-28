@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "cn.demo.videolist"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'
+    compile project(':vitamio')
+}
