@@ -143,8 +143,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mAppContext = context.getApplicationContext();
         mSettings = new Settings(mAppContext);
 
-        mSettings.setEnableSurfaceView(false);
         mSettings.setEnableTextureView(true);
+        mSettings.setEnableSurfaceView(true);
+
         initBackground();
         initRenders();
 
@@ -902,10 +903,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
         if (mSettings.getEnableTextureView() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             mAllRenders.add(RENDER_TEXTURE_VIEW);
-
         if (mSettings.getEnableSurfaceView())
             mAllRenders.add(RENDER_SURFACE_VIEW);
-
         if (mSettings.getEnableNoView())
             mAllRenders.add(RENDER_NONE);
 
@@ -1212,9 +1211,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return MediaPlayerCompat.getSelectedTrack(mMediaPlayer, trackType);
     }
 
-    public int getmCurrentState(){
+    public int getCurrentStatue(){
         return mCurrentState;
     }
+
 
     /**
      * 获取当前截屏

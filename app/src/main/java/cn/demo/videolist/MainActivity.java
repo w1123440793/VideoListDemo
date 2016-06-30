@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
 
 import cn.demo.videolist.media.IjkVideoView;
 import cn.demo.videolist.media.VideoAdapter;
-import io.vov.vitamio.Vitamio;
+//import io.vov.vitamio.Vitamio;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
+        /*if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this)) {
             Log.e("tag", "checkVitamioLibs");
             return;
-        }
+        }*/
 
         context=this;
-        Vitamio.isInitialized(this);
+//        Vitamio.isInitialized(this);
         setContentView(R.layout.activity_main);
         mLayoutManager = new LinearLayoutManager(this);
         videoList= (RecyclerView) findViewById(R.id.video_list);

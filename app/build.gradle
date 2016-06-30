@@ -25,8 +25,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.+'
     compile 'com.google.code.gson:gson:2.6.2'
+
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'
-    compile project(':vitamio')
+    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.5.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.5.1'
 }

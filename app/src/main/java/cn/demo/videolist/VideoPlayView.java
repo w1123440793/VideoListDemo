@@ -221,7 +221,7 @@ public class VideoPlayView extends RelativeLayout implements MediaPlayer.OnInfoL
     }
 
     public int VideoStatus() {
-        return mVideoView.getmCurrentState();
+        return mVideoView.getCurrentStatue();
     }
 
     private CompletionListener completionListener;
