@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout videoLayout;
 
     private int postion = -1;
-    private int lastPostion=-1;
+    private int lastPostion = -1;
     private Context context;
     private VideoPlayView videoItemView;
 
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private VideoListData listData;
     private RelativeLayout smallLayout;
     private ImageView close;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -51,34 +52,37 @@ public class MainActivity extends AppCompatActivity {
             return;
         }*/
 
-        context=this;
+        context = this;
 //        Vitamio.isInitialized(this);
         setContentView(R.layout.activity_main);
         mLayoutManager = new LinearLayoutManager(this);
-        videoList= (RecyclerView) findViewById(R.id.video_list);
+        videoList = (RecyclerView) findViewById(R.id.video_list);
         videoList.setLayoutManager(mLayoutManager);
-        adapter=new VideoAdapter(this);
+        adapter = new VideoAdapter(this);
         videoList.setAdapter(adapter);
-        fullScreen= (FrameLayout) findViewById(R.id.full_screen);
+        fullScreen = (FrameLayout) findViewById(R.id.full_screen);
         videoLayout = (FrameLayout) findViewById(R.id.layout_video);
 
         videoItemView = new VideoPlayView(context);
         String data = readTextFileFromRawResourceId(this, R.raw.video_list);
         listData = new Gson().fromJson(data, VideoListData.class);
         adapter.refresh(listData.getList());
-        smallLayout= (RelativeLayout) findViewById(R.id.small_layout);
+        smallLayout = (RelativeLayout) findViewById(R.id.small_layout);
 
-        close= (ImageView) findViewById(R.id.close);
+        close = (ImageView) findViewById(R.id.close);
         initActions();
     }
 
-    private void initActions(){
+    private void initActions() {
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (videoItemView.isPlay()){
-                    videoItemView.pause();
+                if (videoItemView.isPlay()) {
+                    videoItemView.stop();
+                    postion = -1;
+                    lastPostion = -1;
+                    videoLayout.removeAllViews();
                     smallLayout.setVisibility(View.GONE);
                 }
             }
@@ -121,43 +125,47 @@ public class MainActivity extends AppCompatActivity {
             public void onclick(int position) {
                 MainActivity.this.postion = position;
 
-                if (videoItemView.VideoStatus() == IjkVideoView.STATE_PAUSED){
-                if (position!=lastPostion) {
+                if (videoItemView.VideoStatus() == IjkVideoView.STATE_PAUSED) {
+                    if (position != lastPostion) {
 
-                    videoItemView.stop();
-                    videoItemView.release();
-                }
-            }
-
-            if(smallLayout.getVisibility()==View.VISIBLE)
-
-            {
-                smallLayout.setVisibility(View.GONE);
-                videoLayout.removeAllViews();
-                videoItemView.setShowContoller(true);
-            }
-
-            if(lastPostion!=-1)
-
-            {
-                ViewGroup last = (ViewGroup) videoItemView.getParent();//找到videoitemview的父类，然后remove
-                if (last != null) {
-                    last.removeAllViews();
-                    View itemView = (View) last.getParent();
-                    if (itemView != null) {
-                        itemView.findViewById(R.id.showview).setVisibility(View.VISIBLE);
+                        videoItemView.stop();
+                        videoItemView.release();
                     }
                 }
-            }
 
-            View view = videoList.findViewHolderForAdapterPosition(postion).itemView;
-            FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.layout_video);
-            frameLayout.removeAllViews();
-            frameLayout.addView(videoItemView);
-            videoItemView.start(listData.getList().get(position).getMp4_url());
-            lastPostion=position;
-        }
-    });
+                if (smallLayout.getVisibility() == View.VISIBLE)
+
+                {
+                    smallLayout.setVisibility(View.GONE);
+                    videoLayout.removeAllViews();
+                    videoItemView.setShowContoller(true);
+                }
+
+                if (lastPostion != -1)
+
+                {
+                    ViewGroup last = (ViewGroup) videoItemView.getParent();//找到videoitemview的父类，然后remove
+                    if (last != null) {
+                        last.removeAllViews();
+                        View itemView = (View) last.getParent();
+                        if (itemView != null) {
+                            itemView.findViewById(R.id.showview).setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+
+                if (videoItemView.getParent() != null) {
+                    ((ViewGroup) videoItemView.getParent()).removeAllViews();
+                }
+
+                View view = videoList.findViewHolderForAdapterPosition(postion).itemView;
+                FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.layout_video);
+                frameLayout.removeAllViews();
+                frameLayout.addView(videoItemView);
+                videoItemView.start(listData.getList().get(position).getMp4_url());
+                lastPostion = position;
+            }
+        });
 
         videoList.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -168,13 +176,13 @@ public class MainActivity extends AppCompatActivity {
                     FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.layout_video);
                     frameLayout.removeAllViews();
                     if (videoItemView != null &&
-                            ((videoItemView.isPlay())||videoItemView.VideoStatus()==IjkVideoView.STATE_PAUSED)) {
+                            ((videoItemView.isPlay()) || videoItemView.VideoStatus() == IjkVideoView.STATE_PAUSED)) {
                         view.findViewById(R.id.showview).setVisibility(View.GONE);
                     }
 
-                    if (videoItemView.VideoStatus()==IjkVideoView.STATE_PAUSED){
-                        if (videoItemView.getParent()!=null)
-                            ((ViewGroup)videoItemView.getParent()).removeAllViews();
+                    if (videoItemView.VideoStatus() == IjkVideoView.STATE_PAUSED) {
+                        if (videoItemView.getParent() != null)
+                            ((ViewGroup) videoItemView.getParent()).removeAllViews();
                         frameLayout.addView(videoItemView);
                         return;
                     }
@@ -196,10 +204,10 @@ public class MainActivity extends AppCompatActivity {
                     frameLayout.removeAllViews();
                     if (smallLayout.getVisibility() == View.GONE && videoItemView != null
                             && videoItemView.isPlay()) {
-                        smallLayout.setVisibility(View.VISIBLE);
                         videoLayout.removeAllViews();
                         videoItemView.setShowContoller(false);
                         videoLayout.addView(videoItemView);
+                        smallLayout.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -209,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (videoItemView==null){
-            videoItemView=new VideoPlayView(context);
+        if (videoItemView == null) {
+            videoItemView = new VideoPlayView(context);
         }
     }
 
@@ -218,29 +226,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if(videoLayout==null)
+        if (videoLayout == null)
             return;
-        if (smallLayout.getVisibility()== View.VISIBLE){
+        if (smallLayout.getVisibility() == View.VISIBLE) {
             smallLayout.setVisibility(View.GONE);
             videoLayout.removeAllViews();
         }
 
-        if (postion!=-1){
-            ViewGroup view= (ViewGroup) videoItemView.getParent();
-            if (view!=null){
+        if (postion != -1) {
+            ViewGroup view = (ViewGroup) videoItemView.getParent();
+            if (view != null) {
                 view.removeAllViews();
             }
         }
         videoItemView.stop();
         videoItemView.release();
         videoItemView.onDestroy();
-        videoItemView=null;
+        videoItemView = null;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (videoItemView!=null){
+        if (videoItemView != null) {
             videoItemView.stop();
         }
     }
@@ -248,29 +256,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (videoItemView!=null){
+        if (videoItemView != null) {
             videoItemView.onChanged(newConfig);
-            if (newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
+            if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 fullScreen.setVisibility(View.GONE);
                 videoList.setVisibility(View.VISIBLE);
                 fullScreen.removeAllViews();
-                if (postion<=mLayoutManager.findLastVisibleItemPosition()
-                        &&postion>=mLayoutManager.findFirstVisibleItemPosition()) {
+                if (postion <= mLayoutManager.findLastVisibleItemPosition()
+                        && postion >= mLayoutManager.findFirstVisibleItemPosition()) {
                     View view = videoList.findViewHolderForAdapterPosition(postion).itemView;
                     FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.layout_video);
                     frameLayout.removeAllViews();
                     frameLayout.addView(videoItemView);
                     videoItemView.setShowContoller(true);
-                }else {
+                } else {
                     videoLayout.removeAllViews();
                     videoLayout.addView(videoItemView);
                     videoItemView.setShowContoller(false);
                     smallLayout.setVisibility(View.VISIBLE);
                 }
                 videoItemView.setContorllerVisiable();
-            }else {
-                ViewGroup viewGroup= (ViewGroup) videoItemView.getParent();
-                if (viewGroup==null)
+            } else {
+                ViewGroup viewGroup = (ViewGroup) videoItemView.getParent();
+                if (viewGroup == null)
                     return;
                 viewGroup.removeAllViews();
                 fullScreen.addView(videoItemView);
@@ -278,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                 videoList.setVisibility(View.GONE);
                 fullScreen.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             adapter.notifyDataSetChanged();
             videoList.setVisibility(View.VISIBLE);
             fullScreen.setVisibility(View.GONE);
@@ -287,8 +295,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode==KeyEvent.KEYCODE_BACK){
-            if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 return true;
             }
