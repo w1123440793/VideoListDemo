@@ -3,11 +3,10 @@ package cn.demo.videolist;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,9 @@ import java.io.InputStreamReader;
 
 import cn.demo.videolist.media.IjkVideoView;
 import cn.demo.videolist.media.VideoAdapter;
-//import io.vov.vitamio.Vitamio;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
+
+//import io.vov.vitamio.Vitamio;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -246,10 +246,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (videoItemView != null) {
+            videoItemView.start();
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (videoItemView != null) {
-            videoItemView.stop();
+//            videoItemView.stop();
+            videoItemView.pause();
         }
     }
 
