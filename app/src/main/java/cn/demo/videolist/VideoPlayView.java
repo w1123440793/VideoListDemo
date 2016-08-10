@@ -7,10 +7,8 @@ import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -103,11 +101,12 @@ public class VideoPlayView extends RelativeLayout implements MediaPlayer.OnInfoL
     }
 
     public void pause() {
-        if (mVideoView.isPlaying()) {
-            mVideoView.pause();
-        } else {
-            mVideoView.start();
-        }
+        mVideoView.pause();
+//        if (mVideoView.isPlaying()) {
+//            mVideoView.pause();
+//        } else {
+//            mVideoView.start();
+//        }
     }
 
     public void start(String path) {
@@ -125,7 +124,7 @@ public class VideoPlayView extends RelativeLayout implements MediaPlayer.OnInfoL
     }
 
     public void start(){
-        if (mVideoView.isPlaying()){
+        if (mVideoView.isInPlaybackState()){
             mVideoView.start();
         }
     }
