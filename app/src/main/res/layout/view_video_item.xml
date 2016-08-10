@@ -34,5 +34,72 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/sound_layout"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="音量"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <cn.demo.videolist.VSeekBar
+            android:id="@+id/sound_seek"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="5dp"
+            android:layout_height="160dp"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
+            android:progressDrawable="@drawable/bg_seek"
+            android:thumb="@null"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/brightness_layout"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="亮度"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <cn.demo.videolist.VSeekBar
+            android:id="@+id/brightness_seek"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="5dp"
+            android:layout_height="160dp"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
+            android:progressDrawable="@drawable/bg_seek"
+            android:thumb="@null" />
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:textSize="16dp"
+        android:id="@+id/seekTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
 
