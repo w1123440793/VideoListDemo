@@ -77,12 +77,6 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration>C:\Users\JUSFOUN\AppData\Roaming\Subversion</configuration>
-    <option name="sshExecutablePath" value="http://192.168.1.9:8081/svn/jusfoun.App" />
-    <option name="sshUserName" value="wcc" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="true" />
-  </component>
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">
