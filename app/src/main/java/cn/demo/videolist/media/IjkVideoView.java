@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -1220,10 +1221,20 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
      * 获取当前截屏
      * @return
      */
-    public Bitmap getBitmap(){
-        if (mRenderView!=null){
-            if (mRenderView instanceof TextureRenderView&&mMediaPlayer!=null)
-                return ((TextureRenderView) mRenderView).getBitmap(mMediaPlayer.getVideoWidth(),mMediaPlayer.getVideoHeight());
+    public Bitmap getBitmap() {
+        if (mRenderView != null) {
+            try {
+                if (mRenderView instanceof TextureRenderView && mMediaPlayer != null) {
+                    if (mVideoRotationDegree == 0)
+                        return ((TextureRenderView) mRenderView).getBitmap(mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
+                    Bitmap bitmap = ((TextureRenderView) mRenderView).getBitmap(mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
+                    Matrix m = new Matrix();
+                    m.setRotate(mVideoRotationDegree, bitmap.getWidth() / (float) 2, bitmap.getHeight() / (float) 2);
+                    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
+                }
+            }catch (Exception e){
+                return null;
+            }
         }
         return null;
     }
